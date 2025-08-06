@@ -60,28 +60,34 @@ framework = arduino
 ```bash
 platformio run --target upload
 ```
-### 6. Configuración del módulo FT232BL
+### 6. Configuración del módulo FT232BL usando UART3
 
-El módulo **FT232BL** permite la comunicación serie entre el PC y la placa Arduino Mega2560. Asegúrate de realizar las siguientes conexiones correctamente:
+El Arduino Mega2560 dispone de múltiples puertos UART. Para usar el **UART3**, debes conectar el módulo **FT232BL** a los pines correspondientes:
 
-#### 🔌 Cableado recomendado
+#### 🔌 Cableado para UART3
 
 | FT232BL Pin | Mega2560 Pin | Descripción             |
 |-------------|--------------|--------------------------|
-| TXD         | RX0 (Pin 0)  | Transmisión desde FT232 |
-| RXD         | TX0 (Pin 1)  | Recepción hacia FT232   |
+| TXD         | RX3 (Pin 15) | Transmisión desde FT232 |
+| RXD         | TX3 (Pin 14) | Recepción hacia FT232   |
 | VCC         | 5V           | Alimentación            |
 | GND         | GND          | Tierra común            |
-| DTR         | RESET (a través de un capacitor de 0.1µF) | Auto-reset para carga de firmware |
+| DTR         | *No necesario* | No se usa con UART3     |
 
-> ⚠️ **Importante:** El pin **DTR** debe conectarse al pin **RESET** de la placa a través de un condensador de **0.1µF** para permitir el auto-reset durante la carga del firmware.
-
-#### 🧪 Verificación
-
-- Una vez conectado, abre el **Monitor Serial** en PlatformIO o Arduino IDE.
-- Selecciona el puerto COM correspondiente al FT232BL.
-- Configura la velocidad de baudios adecuada (por ejemplo, `9600` o `115200` según tu sketch).
+> ⚠️ **Nota:** Al usar UART3, el pin **DTR** no se conecta al pin RESET, ya que no se utiliza el auto-reset para cargar firmware. La carga del firmware sigue haciéndose por USB nativo (UART0), mientras UART3 se usa para comunicación adicional.
 
 ---
 
-¿Quieres que te incluya un diagrama ASCII del cableado o una explicación de cómo identificar los pines en el módulo FT232BL? También puedo ayudarte a documentar el uso del ARV-Debugger si lo necesitas.
+#### 📐 Diagrama ASCII de conexión
+
+```
++------------------+        +----------------------+
+|   FT232BL        |        |   Arduino Mega2560   |
+|------------------|        |----------------------|
+| TXD ------------> RX3     | Pin 15               |
+| RXD <------------ TX3     | Pin 14               |
+| VCC ------------> 5V      |                      |
+| GND ------------> GND     |                      |
+| DTR ---✖ (no usar)        |                      |
++------------------+        +----------------------+
+```
