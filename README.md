@@ -32,3 +32,7 @@ PlatformIO puede instalarse como extensión de VSCode o desde la terminal.
 ### 2. Clonar el repositorio
   git clone https://github.com/tu-usuario/tu-repositorio.git
   cd tu-repositorio
+
+![Esquema de conexión](https://github.com/edujimser/SensorsArduinoC/issues/1#issue-3297971654)
+
+
