@@ -16,6 +16,7 @@ Este proyecto es un sistema modular para la creación, prueba y validación de f
 - **ARV-Debugger**: Herramienta para depuración y análisis del comportamiento del código.
 - **FT232BL**: Módulo USB a serie para comunicación y programación externa.
 
+---
 ## ⚙️ Instalación base
 
 Sigue estos pasos para configurar el entorno de desarrollo y comenzar a trabajar con el proyecto:
@@ -44,15 +45,12 @@ board = mega2560
 framework = arduino
 ```
 
----
-
 ### 4. Conectar el hardware
 
 - Conecta la placa **Mega2560** al PC mediante USB.
 - Si usas el módulo **FT232BL**, asegúrate de que esté correctamente cableado al puerto serie de la placa.
 - Si usas **ARV-Debugger**, conecta según el esquema de depuración que estés utilizando.
 
----
 
 ### 5. Compilar y cargar el firmware
 
@@ -66,3 +64,4 @@ framework = arduino
 ```bash
 platformio run --target upload
 ```
+
