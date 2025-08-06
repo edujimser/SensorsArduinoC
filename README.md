@@ -178,7 +178,7 @@ description = Sensores
 - El puerto del **FT232BL** debe usarse para `debug_port` y `monitor_port` si estás trabajando con **UART3**.
 
 --
-#### 🚫 No inicializar `Serial3` ni `Serial` manualmente
+#### 🚫 No inicializar `Serial3` manualmente
 
 > ⚠️ **Importante:** No debes llamar a `Serial3.begin()` en tu código si estás usando **ARV-Debugger**.
 
