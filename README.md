@@ -28,3 +28,7 @@ PlatformIO puede instalarse como extensión de VSCode o desde la terminal.
 - **Terminal (opcional)**:
   ```bash
   pip install platformio
+
+### 2. Clonar el repositorio
+  git clone https://github.com/tu-usuario/tu-repositorio.git
+  cd tu-repositorio
