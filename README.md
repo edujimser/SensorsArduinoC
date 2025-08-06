@@ -30,9 +30,39 @@ PlatformIO puede instalarse como extensión de VSCode o desde la terminal.
   pip install platformio
 
 ### 2. Clonar el repositorio
-  git clone https://github.com/tu-usuario/tu-repositorio.git
+  git clone https://github.com/edujimser/SensorsArduinoC.git
   cd tu-repositorio
+  
+### 3. Seleccionar la placa Mega2560
 
-![Esquema de conexión]([https://github.com/edujimser/SensorsArduinoC/issues/1#issue-3297971654](https://private-user-images.githubusercontent.com/119799007/475210771-237ac12b-0309-44e4-984e-7a8cc4e95dde.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTQ1MTIzODYsIm5iZiI6MTc1NDUxMjA4NiwicGF0aCI6Ii8xMTk3OTkwMDcvNDc1MjEwNzcxLTIzN2FjMTJiLTAzMDktNDRlNC05ODRlLTdhOGNjNGU5NWRkZS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwODA2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDgwNlQyMDI4MDZaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MTVlZjU4MWIwMTY3YzFkZTEyNzU1Y2JjOWM4NmMwODI1MWE5OTNjZDIyY2FhMDFkNjZkZTFhYjg1NTE4YTMzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.etrCEKu67C9gJAGW2N8E32vutCselaN5NzNYXk1kZFQ))
+El archivo `platformio.ini` ya está configurado para usar la placa Arduino Mega2560:
 
+```ini
+[env:mega2560]
+platform = atmelavr
+board = mega2560
+framework = arduino
+```
 
+---
+
+### 4. Conectar el hardware
+
+- Conecta la placa **Mega2560** al PC mediante USB.
+- Si usas el módulo **FT232BL**, asegúrate de que esté correctamente cableado al puerto serie de la placa.
+- Si usas **ARV-Debugger**, conecta según el esquema de depuración que estés utilizando.
+
+---
+
+### 5. Compilar y cargar el firmware
+
+**Desde PlatformIO:**
+
+- Haz clic en el ícono de **Build** 🛠️ para compilar.
+- Haz clic en **Upload** ⬆️ para cargar el firmware a la placa.
+
+**O desde la terminal:**
+
+```bash
+platformio run --target upload
+```
