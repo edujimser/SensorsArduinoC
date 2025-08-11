@@ -11,13 +11,15 @@
 #include "pinout/pinout.h"
 //Mensaje del sistema
 #include "msg/msg.h"
+//SensorLed
+#include "sensors_Led/sensor_Led.h"
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
+
 void setup() {
- 
   if (configuracion.debugMode) {
     // Inicializa el programa en modo depuración
     debug_init();  
@@ -27,11 +29,11 @@ void setup() {
     while (!Serial);      // Espera a que el puerto esté listo (opcional en Mega);
     mensajeEstandar("Sistema iniciado modo ejecucion", __FILE__,__FUNCTION__, __DATE__, __TIME__);
   };
-
-  
 }
 
+LedRojo ledRojo(Pins::GPIO[0].numero); // Instancia del LED rojo en el pin definido
 
 void loop() {
-      //mensajeEstandar("Bucle principal en ejecución", __FILE__, __FUNCTION__, __DATE__, __TIME__);
+      ledRojo.conmutacionEstadoPorTiempo(4000); // Enciende el LED rojo
+
 }

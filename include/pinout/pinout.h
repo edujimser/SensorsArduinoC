@@ -12,7 +12,7 @@ struct PinInfo {
 };
 
 /*
- * 📦 Namespace Pins: Agrupa todos los arrays de pines
+ * 📦 Namespace Pins: Agrupa todos los arrays de pines y funciones basicas
  */
 namespace Pins {
 
@@ -114,6 +114,7 @@ namespace Pins {
         {"PIN_GPIO_48", 48},  // Digital: entrada/salida general
         {"PIN_GPIO_49", 49}   // Digital: entrada/salida general
     };
+        
 
     /*
      * 📏 Tamaños de arrays (para bucles y diagnósticos)
@@ -140,5 +141,8 @@ void diagnosticarPWM();
 
 // Ejecuta ambos diagnósticos y muestra resultados por Serial
 void diagnosticoCompleto();
+
+// Verifica si un pin específico existe en el array de pines GPIO
+bool existePinEnPinGIO(int numeroPin);
 
 #endif  // PINS_H

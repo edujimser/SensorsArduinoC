@@ -1,7 +1,9 @@
 #include "configuracion.h"
-
+#include "pinout/pinout.h"
 configuracionMain configuracion = {
-    .debugMode = true // Inicializa el modo depueracion
+    .debugMode = false // Inicializa el modo depueracion
 
 };
+
+
 
