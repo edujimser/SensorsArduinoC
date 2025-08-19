@@ -1,5 +1,6 @@
 #include "sensors_Led/sensor_Led.h"
 #include "pinout/pinout.h"
+#include "msg/msg.h"
 
 /**
  * @brief Constructor de la clase LedBasicoDigital.
@@ -11,10 +12,8 @@
 LedBasicoDigital::LedBasicoDigital(uint8_t p) : 
     pin(p)
     {
-        if(existePinEnPinGIO(pin) == false){
-            Serial.print("Error: El pin ");
-            Serial.print(pin);
-            Serial.println(" no está definido en el array de pines GPIO.");
+        if(isPinInGPIO(pin) == false){
+            standardErrorMessage("El pin no existe en la configuración de PinGIO", __FILE__, __FUNCTION__, __DATE__, __TIME__, __LINE__);
             return;
         }
 

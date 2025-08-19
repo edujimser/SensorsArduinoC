@@ -1,31 +1,68 @@
-#ifndef MENSAJE_RELASE_H
-#define MENSAJE_RELASE_H
+#ifndef MESSAGE_RELEASE_H
+#define MESSAGE_RELEASE_H
 
-//Headers necesarios para Arduino
-#include <Arduino.h> 
+#include <Arduino.h>
+#include "configuracion.h"
 
 /**
- * @brief Imprime un mensaje de log enriquecido en el monitor serial.
+ * @brief Prints an enriched log message to the serial monitor.
  *
- * Esta función debe ser definida en el archivo fuente (.cpp) correspondiente.
- * Genera una salida estructurada que incluye:
- * - Fecha y hora de compilación
- * - Archivo fuente desde donde se llama
- * - Nombre de la función invocadora
- * - Mensaje personalizado
+ * This function should be defined in the corresponding source (.cpp) file.
+ * It generates a structured output that includes:
+ * - Compilation date and time
+ * - Source file from which it is called
+ * - Name of the calling function
+ * - Custom message
  *
- * El formato de salida es:
- * [fecha hora] archivo::funcion ➤ mensaje
+ * Output format:
+ * [date time] file::function ➤ message
  *
- * Ejemplo:
- * [Aug 7 2025 01:23:00] main.cpp::setup ➤ Iniciando sistema...
+ * Example:
+ * [Aug 7 2025 01:23:00] main.cpp::setup ➤ System initialization...
  *
- * @param mensaje  Texto personalizado que se desea imprimir
- * @param archivo  Nombre del archivo fuente (__FILE__)
- * @param funcion  Nombre de la función que llama (__FUNCTION__)
- * @param fecha    Fecha de compilación (__DATE__)
- * @param hora     Hora de compilación (__TIME__)
+ * @param message   Custom text to be printed
+ * @param file      Source file name (__FILE__)
+ * @param function  Name of the calling function (__FUNCTION__)
+ * @param date      Compilation date (__DATE__)
+ * @param time      Compilation time (__TIME__)
  */
-void mensajeEstandar(const char* mensaje, const char* archivo, const char* funcion, const char* fecha, const char* hora);
+void standardMessage(const char* message, const char* file, const char* function, const char* date, const char* time);
 
-#endif // MENSAJE_RELASE_H
+/**
+ * @brief Prints an enriched error message to the serial monitor, including contextual information.
+ *
+ * This function generates a structured output that helps identify the origin of runtime errors.
+ * The output includes:
+ * - Compilation date and time
+ * - Source file name
+ * - Function name from which it is invoked
+ * - Line number where the function was called
+ * - Custom error message
+ *
+ * Output format:
+ * [date time] file::function (Line N) ❌ ERROR ➤ message
+ *
+ * Example output:
+ * [Aug 7 2025 01:23:00] sensor.cpp::readSensor (Line 42) ❌ ERROR ➤ Failed to initialize sensor
+ *
+ * @param message   Description of the specific error
+ * @param file      Source file name (__FILE__)
+ * @param function  Function name where the error was detected (__FUNCTION__)
+ * @param date      Compilation date (__DATE__)
+ * @param time      Compilation time (__TIME__)
+ * @param line      Line number in the file where the function is invoked (__LINE__)
+ */
+void standardErrorMessage(const char* message, const char* file, const char* function, const char* date, const char* time, int line);
+
+/**
+ * @brief Displays the current system configuration status on the serial monitor.
+ * 
+ * This function prints the current values of the fields defined in the 
+ * configuracionMain structure, such as debug mode and LED project status, 
+ * in a user-friendly format to facilitate system diagnostics or verification.
+ * 
+ * @param configuration  Structure containing the main system configuration.
+ */
+void showConfigurationMessage(const configuracionMain& configuration);
+
+#endif // MESSAGE_RELEASE_H

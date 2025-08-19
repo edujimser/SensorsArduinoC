@@ -3,93 +3,97 @@
 #include "pinout/pinout.h"
 
 /**
- * @brief Diagnóstico de pines digitales (GPIO) configurados como entradas con resistencia pull-up.
+ * @brief Diagnostic for digital GPIO pins configured as input with pull-up resistor.
  * 
- * Recorre todos los pines definidos como GPIO, los configura como INPUT_PULLUP
- * y verifica si están conectados a masa (lectura LOW). Imprime los resultados por Serial.
+ * Iterates through all defined GPIO pins, configures them as INPUT_PULLUP,
+ * and checks if they are connected to ground (LOW reading). Prints results via Serial.
  * 
- * @note Este diagnóstico es útil para detectar si un pin está conectado a tierra.
+ * @note Useful for detecting if a pin is grounded.
  */
-void diagnosticarGPIO() {
-    Serial.println("➡️ Verificando pines digitales (GPIO):");
+void diagnoseGPIO() {
+    Serial.println("➡️ Checking digital pins (GPIO):");
 
     for (size_t i = 0; i < Pins::NUM_GPIO; ++i) {
-        const PinInfo& pin = Pins::GPIO[i];  // Acceso directo al pin actual
+        const PinInfo& pin = Pins::GPIO[i];  // Direct access to current pin
 
-        pinMode(pin.numero, INPUT_PULLUP);   // Configura como entrada con resistencia pull-up
-        delay(5);                            // Breve espera para estabilizar lectura
-        int estado = digitalRead(pin.numero); // Lee el estado del pin
+        pinMode(pin.number, INPUT_PULLUP);   // Configure as input with pull-up resistor
+        delay(5);                            // Brief delay to stabilize reading
+        int state = digitalRead(pin.number); // Read pin state
 
-        // Muestra el resultado por Serial
+        // Print result to Serial
         Serial.print("🔍 ");
-        Serial.print(pin.nombre);
+        Serial.print(pin.name);
         Serial.print(" [Pin ");
-        Serial.print(pin.numero);
-        Serial.print("] → Estado: ");
-        Serial.println(estado == LOW ? "Conectado a masa (LOW)" : "Sin carga (HIGH)");
+        Serial.print(pin.number);
+        Serial.print("] → State: ");
+        Serial.println(state == LOW ? "Connected to ground (LOW)" : "Floating (HIGH)");
+
+        // Force pin to LOW state to avoid false readings
+        digitalWrite(pin.number, LOW);
     }
 }
 
 /**
- * @brief Diagnóstico de pines PWM configurados como salidas digitales.
+ * @brief Diagnostic for PWM pins configured as digital outputs.
  * 
- * Configura cada pin PWM como OUTPUT, lo pone en estado HIGH y verifica si el estado se mantiene.
- * Imprime los resultados por Serial para detectar posibles fallos o conflictos.
+ * Configures each PWM pin as OUTPUT, sets it to HIGH, and checks if the state holds.
+ * Prints results via Serial to detect potential faults or conflicts.
  * 
- * @note Este diagnóstico permite verificar si los pines PWM responden correctamente como salidas.
+ * @note Useful for verifying PWM pins behave correctly as outputs.
  */
-void diagnosticarPWM() {
-    Serial.println("\n➡️ Verificando pines PWM:");
+void diagnosePWM() {
+    Serial.println("\n➡️ Checking PWM pins:");
 
     for (size_t i = 0; i < Pins::NUM_PWM; ++i) {
-        const PinInfo& pin = Pins::PWM[i];  // Acceso directo al pin actual
+        const PinInfo& pin = Pins::PWM[i];  // Direct access to current pin
 
-        pinMode(pin.numero, OUTPUT);        // Configura como salida
-        digitalWrite(pin.numero, HIGH);     // Pone el pin en estado alto
-        delay(5);                           // Breve espera para estabilizar lectura
-        int estado = digitalRead(pin.numero); // Lee el estado del pin
+        pinMode(pin.number, OUTPUT);        // Configure as output
+        digitalWrite(pin.number, HIGH);     // Set pin to HIGH
+        delay(5);                           // Brief delay to stabilize reading
+        int state = digitalRead(pin.number); // Read pin state
 
-        // Muestra el resultado por Serial
+        // Print result to Serial
         Serial.print("🌀 ");
-        Serial.print(pin.nombre);
+        Serial.print(pin.name);
         Serial.print(" [Pin ");
-        Serial.print(pin.numero);
-        Serial.print("] → Estado: ");
-        Serial.println(estado == HIGH ? "Funciona correctamente" : "Falla o conflicto");
+        Serial.print(pin.number);
+        Serial.print("] → State: ");
+        Serial.println(state == HIGH ? "Working correctly" : "Fault or conflict");
     }
 }
 
 /**
- * @brief Ejecuta un diagnóstico completo de los pines digitales (GPIO) y PWM.
+ * @brief Runs a full diagnostic of digital GPIO and PWM pins.
  * 
- * Llama a las funciones de diagnóstico individuales para GPIO y PWM,
- * mostrando los resultados por Serial. Útil como prueba inicial del hardware.
+ * Calls individual diagnostic functions for GPIO and PWM,
+ * printing results via Serial. Useful as an initial hardware test.
  * 
- * @note Ideal para verificar el estado general de los pines al inicio del programa.
+ * @note Ideal for checking general pin status at program startup.
  */
-void diagnosticoCompleto() {
-    Serial.println("🔧 Diagnóstico inicial de pines digitales y PWM\n");
+void fullDiagnostics() {
+    Serial.println();
+    Serial.println("🔧 Initial diagnostic of digital and PWM pins\n");
 
-    diagnosticarGPIO();   // Diagnóstico de pines GPIO
-    diagnosticarPWM();    // Diagnóstico de pines PWM
+    diagnoseGPIO();   // GPIO pin diagnostic
+    diagnosePWM();    // PWM pin diagnostic
 
-    Serial.println("\n✅ Diagnóstico completo.\n");
+    Serial.println("\n✅ Full diagnostic complete.\n");
 }
 
 /**
- * @brief Verifica si un número de pin existe en la lista de pines GPIO.
+ * @brief Checks if a given pin number exists in the GPIO pin list.
  * 
- * Recorre el arreglo Pins::GPIO y compara el número físico del pin con los definidos.
+ * Iterates through Pins::GPIO and compares the physical pin number.
  * 
- * @param numeroPin Número físico del pin que se desea verificar.
- * @return true Si el pin está presente en la lista GPIO.
- * @return false Si el pin no se encuentra en la lista GPIO.
+ * @param pinNumber Physical pin number to check.
+ * @return true If the pin is found in the GPIO list.
+ * @return false If the pin is not found.
  */
-bool existePinEnPinGIO(int numeroPin) {
+bool isPinInGPIO(int pinNumber) {
     for (const auto& gpio : Pins::GPIO) {
-        if (gpio.numero == numeroPin) {
+        if (gpio.number == pinNumber) {
             return true;
         }
-    };
+    }
     return false;
-};
+}

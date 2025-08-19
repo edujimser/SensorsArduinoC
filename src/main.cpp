@@ -16,24 +16,29 @@
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-
 void setup() {
-  if (configuracion.debugMode) {
+  if (systemConfiguration.debugMode) {
     // Inicializa el programa en modo depuración
     debug_init();  
   }else{
     // Inicializa el programa en modo ejecución
-    Serial.begin(57600); // Iniciar la comunicación serial a 57600 baudio
-    while (!Serial);      // Espera a que el puerto esté listo (opcional en Mega);
-    mensajeEstandar("Sistema iniciado modo ejecucion", __FILE__,__FUNCTION__, __DATE__, __TIME__);
+    // Iniciar la comunicación serial a 57600 baudio
+    Serial.begin(57600);
+     // Espera a que el puerto esté listo (opcional en Mega); 
+    while (!Serial);
+    // Mensaje de inicio del sistema     
+    standardMessage("Sistema iniciado modo ejecucion", __FILE__,__FUNCTION__, __DATE__, __TIME__);
+    // Diagnóstico completo del sistema entradas/salidas
+    fullDiagnostics();
+    // Inicializa los pines de configuración principal
+    initializeMainConfigurationPins(systemConfiguration);
+    // Mensaje de configuración proyecto
+    showConfigurationMessage(systemConfiguration);
   };
-}
+};
 
-LedRojo ledRojo(Pins::GPIO[0].numero); // Instancia del LED rojo en el pin definido
+
 
 void loop() {
-      ledRojo.conmutacionEstadoPorTiempo(4000); // Enciende el LED rojo
-
+      ledRojo->conmutacionEstadoPorTiempo(2000); // Enciende el LED rojo
 }
