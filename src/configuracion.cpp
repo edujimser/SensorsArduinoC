@@ -2,6 +2,7 @@
 #include "pinout/pinout.h"
 #include "sensors_Led/sensor_Led.h"
 
+
 /**
  * @brief Main configuration structure for the project.
  *
@@ -13,7 +14,8 @@ configuracionMain systemConfiguration = {
     // Initialize debug mode
     .debugMode = false,
     // Sensors and systems
-    .proyectoLed = false 
+    .proyect_Led = false, 
+    .proyect_RIFD_RC522 = true
 };
 
 /**
@@ -27,15 +29,21 @@ configuracionMain systemConfiguration = {
  * @pre Call once during system startup, before using peripherals.
  * @post Pins are left in a safe and consistent state for the remainder of execution.
  */
+
 // Initialization
 LedRojo* ledRojo = nullptr;
 
 void initializeMainConfigurationPins(configuracionMain systemConfiguration) {
     // Project setup
-    if (systemConfiguration.proyectoLed) {
+    if (systemConfiguration.proyect_Led){
         // Pins
         ledRojo = new LedRojo(Pins::GPIO[1].number); // Assign GPIO pin 22 to the red LED
-    }
+    };
+
+    if (systemConfiguration.proyect_RIFD_RC522){
+        Serial.println("🔌 RFID-RC522 pines configurados en archivo .h:");
+    };
+    
 }
 
 

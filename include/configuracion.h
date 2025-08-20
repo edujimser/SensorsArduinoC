@@ -12,7 +12,8 @@
  */
 struct configuracionMain {
     bool debugMode;
-    bool proyectoLed;
+    bool proyect_Led;
+    bool proyect_RIFD_RC522;
 };
 extern configuracionMain systemConfiguration;
 

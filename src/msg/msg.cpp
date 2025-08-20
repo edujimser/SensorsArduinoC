@@ -95,7 +95,13 @@ void showConfigurationMessage(const configuracionMain& configuration) {
   Serial.println(configuration.debugMode ? "Enabled" : "Disabled");
 
   Serial.print("💡 LED project: ");
-  Serial.println(configuration.proyectoLed ? "Enabled" : "Disabled");
+  Serial.println(configuration.proyect_Led ? "Enabled" : "Disabled");
+
+    Serial.print("💡 LED project: ");
+  Serial.println(configuration.proyect_RIFD_RC522 ? "Enabled" : "Disabled");
+
   Serial.println("----------------------------------------");
   Serial.println(); // Final line break
+
+  
 }
