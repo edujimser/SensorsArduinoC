@@ -1,7 +1,7 @@
-#ifndef     CONF_MAIN_H
-#define     CONF_MAIN_H
+#include "config.h"
+#include "pinout/pinout.h"
 
-#include "sensors_Led/sensor_Led.h"
+
 
 /**
  * @brief Main configuration structure for the project.
@@ -10,12 +10,12 @@
  * of the application, allowing features to be enabled or disabled
  * at compile-time or runtime.
  */
-struct configuracionMain {
-    bool debugMode;
-    bool proyect_Led;
-    bool proyect_RIFD_RC522;
+configuracionMain systemConfiguration = {
+    // Initialize debug mode
+    .debugMode = false,
+    // Sensors and systems
+    .proyect_RIFD_RC522 = true
 };
-extern configuracionMain systemConfiguration;
 
 /**
  * @brief Initializes hardware pins according to the provided configuration.
@@ -28,9 +28,16 @@ extern configuracionMain systemConfiguration;
  * @pre Call once during system startup, before using peripherals.
  * @post Pins are left in a safe and consistent state for the remainder of execution.
  */
-void initializeMainConfigurationPins(configuracionMain systemConfiguration);
 
-// List of pins
-extern LedRojo* ledRojo;
 
-#endif // CONF_MAIN_H
+void initializeMainConfiguration(configuracionMain systemConfiguration) {
+    if (systemConfiguration.proyect_RIFD_RC522){
+        RFID_System rfidSystem;
+        rfidSystem.init();
+    };
+    
+};
+
+
+
+

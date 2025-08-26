@@ -1,6 +1,7 @@
-#include "configuracion.h"
-#include "pinout/pinout.h"
-#include "sensors_Led/sensor_Led.h"
+#ifndef     CONF_MAIN_H
+#define     CONF_MAIN_H
+
+#include "RFID-RC522/RFID-RC522_System.h"
 
 
 /**
@@ -10,13 +11,11 @@
  * of the application, allowing features to be enabled or disabled
  * at compile-time or runtime.
  */
-configuracionMain systemConfiguration = {
-    // Initialize debug mode
-    .debugMode = false,
-    // Sensors and systems
-    .proyect_Led = false, 
-    .proyect_RIFD_RC522 = true
+struct configuracionMain {
+    bool debugMode;
+    bool proyect_RIFD_RC522;
 };
+extern configuracionMain systemConfiguration;
 
 /**
  * @brief Initializes hardware pins according to the provided configuration.
@@ -29,23 +28,7 @@ configuracionMain systemConfiguration = {
  * @pre Call once during system startup, before using peripherals.
  * @post Pins are left in a safe and consistent state for the remainder of execution.
  */
-
-// Initialization
-LedRojo* ledRojo = nullptr;
-
-void initializeMainConfigurationPins(configuracionMain systemConfiguration) {
-    // Project setup
-    if (systemConfiguration.proyect_Led){
-        // Pins
-        ledRojo = new LedRojo(Pins::GPIO[1].number); // Assign GPIO pin 22 to the red LED
-    };
-
-    if (systemConfiguration.proyect_RIFD_RC522){
-        Serial.println("🔌 RFID-RC522 pines configurados en archivo .h:");
-    };
-    
-}
+void initializeMainConfiguration(configuracionMain systemConfiguration);
 
 
-
-
+#endif // CONF_MAIN_H

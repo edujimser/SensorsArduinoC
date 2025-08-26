@@ -2,7 +2,7 @@
 #define MESSAGE_RELEASE_H
 
 #include <Arduino.h>
-#include "configuracion.h"
+#include "config.h"
 
 /**
  * @brief Prints an enriched log message to the serial monitor.
@@ -26,7 +26,56 @@
  * @param date      Compilation date (__DATE__)
  * @param time      Compilation time (__TIME__)
  */
-void standardMessage(const char* message, const char* file, const char* function, const char* date, const char* time);
+void standardMessage(const char* message,
+                     const char* file,
+                     const char* function,
+                     const char* date,
+                     const char* time);
+
+
+/**
+ * Prints a centered header with decorative lines above/below.
+ * This is a reduced version without metadata, ideal for section titles.
+ *
+ * @param message   The title text to display centered.
+ * @param width     Total width of the decorative line (default: 200).
+ * @param deco      Decorative character to use (default: '-').
+ */
+void standardHeader(const char* message,
+                    uint16_t width = 200,
+                    char deco = '-');
+
+
+/**
+ * @brief Prints a decorated header with centered text and padding on both sides.
+ *
+ * This function builds a single line consisting of a combined text
+ * that includes the message, file, function, date, and time, surrounded
+ * by decorative characters on the left and right to achieve a total line width
+ * specified by the user.
+ *
+ * Output format example:
+ *  ----- Message | file | function | date time -----
+ *
+ * @param message   Main text or description to display.
+ * @param file      File path or source file name.
+ * @param function  Name of the function where this is called.
+ * @param date      Compilation date (recommended: __DATE__).
+ * @param time      Compilation time (recommended: __TIME__).
+ * @param width     Total width of the line (default: 120).
+ * @param deco      Decorative character (default: '-').
+ *
+ * @note The number of decorative characters is automatically adjusted
+ *       to keep the text centered within the given width.
+ */
+void standardHeaderFull(const char* message,
+                          const char* file,
+                          const char* function,
+                          const char* date, 
+                          const char* time,
+                          uint16_t width = 120,
+                          char deco = '-');
+
 
 /**
  * @brief Prints an enriched error message to the serial monitor, including contextual information.
@@ -53,6 +102,7 @@ void standardMessage(const char* message, const char* file, const char* function
  * @param line      Line number in the file where the function is invoked (__LINE__)
  */
 void standardErrorMessage(const char* message, const char* file, const char* function, const char* date, const char* time, int line);
+
 
 /**
  * @brief Displays the current system configuration status on the serial monitor.

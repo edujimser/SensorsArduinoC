@@ -69,21 +69,42 @@ namespace Pins {
     };
 
     /*
+    * 🎯 ANALOG: Pins with analog input capability (ADC)
+    */
+    inline constexpr PinInfo ANALOG[] = {
+        {"PIN_ANALOG_A00", 54},   // A0: general analog input
+        {"PIN_ANALOG_A01", 55},   // A1: general analog input
+        {"PIN_ANALOG_A02", 56},   // A2: general analog input
+        {"PIN_ANALOG_A03", 57},   // A3: general analog input
+        {"PIN_ANALOG_A04", 58},   // A4: general analog input
+        {"PIN_ANALOG_A05", 59},   // A5: general analog input
+        {"PIN_ANALOG_A06", 60},   // A6: general analog input
+        {"PIN_ANALOG_A07", 61},   // A7: general analog input
+        {"PIN_ANALOG_A08", 62},   // A8: extended analog input (Mega only)
+        {"PIN_ANALOG_A90", 63},   // A9: extended analog input (Mega only)
+        {"PIN_ANALOG_A10", 64},  // A10: extended analog input (Mega only)
+        {"PIN_ANALOG_A11", 65},  // A11: extended analog input (Mega only)
+        {"PIN_ANALOG_A12", 66},  // A12: extended analog input (Mega only)
+        {"PIN_ANALOG_A13", 67},  // A13: extended analog input (Mega only)
+        {"PIN_ANALOG_A14", 68},  // A14: extended analog input (Mega only)
+        {"PIN_ANALOG_A15", 69}   // A15: extended analog input (Mega only)
+    };
+
+    /*
      * 🌀 PWM: Pins with pulse-width modulation capability
      */
     inline constexpr PinInfo PWM[] = {
-        {"PIN_PWM_2", 2},    // PWM + INT0: useful for buttons with interrupt
-        {"PIN_PWM_3", 3},    // PWM + INT1: servos or sensors with interrupt
-        {"PIN_PWM_4", 4},    // Standard PWM: LED, motor
-        {"PIN_PWM_5", 5},    // Standard PWM: LED, motor
-        {"PIN_PWM_6", 6},    // Standard PWM: LED, motor
-        {"PIN_PWM_7", 7},    // Standard PWM: LED, motor
-        {"PIN_PWM_8", 8},    // Standard PWM: LED, motor
-        {"PIN_PWM_9", 9},    // Standard PWM: LED, motor
+        {"PIN_PWM_02", 2},    // PWM + INT0: useful for buttons with interrupt
+        {"PIN_PWM_03", 3},    // PWM + INT1: servos or sensors with interrupt
+        {"PIN_PWM_04", 4},    // Standard PWM: LED, motor
+        {"PIN_PWM_05", 5},    // Standard PWM: LED, motor
+        {"PIN_PWM_06", 6},    // Standard PWM: LED, motor
+        {"PIN_PWM_07", 7},    // Standard PWM: LED, motor
+        {"PIN_PWM_08", 8},    // Standard PWM: LED, motor
+        {"PIN_PWM_09", 9},    // Standard PWM: LED, motor
         {"PIN_PWM_10", 10},  // PWM + SPI SS: ideal as SPI output
         {"PIN_PWM_11", 11},  // Standard PWM: LED, motor
         {"PIN_PWM_12", 12},  // Standard PWM: LED, motor
-        {"PIN_PWM_13", 13},  // PWM + onboard LED: useful for quick tests
         {"PIN_PWM_44", 44},  // Extended PWM (Mega): large motors
         {"PIN_PWM_45", 45},  // Extended PWM (Mega): large motors
         {"PIN_PWM_46", 46}   // Extended PWM (Mega): large motors
@@ -93,6 +114,7 @@ namespace Pins {
      * 🧩 GPIO: General-purpose digital pins
      */
     inline constexpr PinInfo GPIO[] = {
+        {"PIN_GPIO_13", 13},  // Digital: general input/output PWM13 'Note: this pin is digital'
         {"PIN_GPIO_22", 22},  // Digital: general input/output 0
         {"PIN_GPIO_23", 23},  // Digital: general input/output 1
         {"PIN_GPIO_24", 24},  // Digital: general input/output 2
@@ -126,6 +148,7 @@ namespace Pins {
     /*
      * 📏 Array sizes (for loops and diagnostics)
      */
+    constexpr size_t NUM_ANALOG     = sizeof(ANALOG) / sizeof(ANALOG[0]);
     constexpr size_t NUM_GPIO       = sizeof(GPIO) / sizeof(GPIO[0]);
     constexpr size_t NUM_PWM        = sizeof(PWM) / sizeof(PWM[0]);
     constexpr size_t NUM_UART_RX    = sizeof(UART_RX) / sizeof(UART_RX[0]);
@@ -140,15 +163,14 @@ namespace Pins {
  * Implemented in pins.cpp
  */
 
-// Configures GPIO pins as INPUT_PULLUP and detects if they are grounded
+// Configures ANALOG  pins as INPUT and detects if voltage is present and it porcent
+void diagnoseAnalog();
+// Configures GPIO  pins as INPUT and detects if voltage is present
 void diagnoseGPIO();
-
-// Configures PWM pins as OUTPUT and sets them HIGH to check for conflicts
+// Configures PWM pins as INPUT and detects if voltage is present
 void diagnosePWM();
-
 // Runs both diagnostics and prints results via Serial
-void fullDiagnostics();
-
+void fullDiagnosticsPins();
 // Checks if a specific pin exists in the GPIO array
 bool isPinInGPIO(int pinNumber);
 

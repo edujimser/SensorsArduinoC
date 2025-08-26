@@ -1,40 +1,159 @@
 #include "msg/msg.h"
 
 /**
- * @brief Prints an enriched log message to the serial monitor.
+ * Prints a standardized, nicely formatted message to the Serial Monitor.
+ * The message will be centered between two decorative lines.
  *
- * This function generates a structured output that includes:
- * - Program compilation date and time
- * - Source file name from which it is called
- * - Name of the function invoking the message
- * - Custom message content
- *
- * Output format:
- * [date time] file::function ➤ message
- *
- * Example:
- * [Aug 7 2025 01:23:00] main.cpp::setup ➤ System initialization...
- *
- * @param message   Custom text to be printed
- * @param file      Source file name (__FILE__)
- * @param function  Name of the calling function (__FUNCTION__)
- * @param date      Compilation date (__DATE__)
- * @param time      Compilation time (__TIME__)
+ * @param message   The main message to display.
+ * @param file      Source file name where the message originated.
+ * @param function  Function name from which this is called.
+ * @param date      Compilation date or custom date string.
+ * @param time      Compilation time or custom time string.
  */
-void standardMessage(const char* message, const char* file, const char* function, const char* date, const char* time) {
-  Serial.println();
-  Serial.print("[");
-  Serial.print(date);
-  Serial.print(" ");
-  Serial.print(time);
-  Serial.print("] ");
-  Serial.print(file);
-  Serial.print("::");
-  Serial.print(function);
-  Serial.print(" ➤ ");
-  Serial.println(message);
-  Serial.println();
+void standardMessage(const char* message, 
+                     const char* file, 
+                     const char* function, 
+                     const char* date, 
+                     const char* time) {
+    const uint8_t totalWidth = 200; // Total width of the decorative line
+    int msgLen = strlen(message);   // Length of the message text
+    int padding = (totalWidth - msgLen) / 2; // Spaces to add on the left to center the text
+
+    Serial.println();
+
+    // ─────────────────────────────
+    // Top decorative line
+    // ─────────────────────────────
+    for (uint8_t i = 0; i < totalWidth; i++) Serial.write('-');
+    Serial.println();
+
+    // ─────────────────────────────
+    // Centered message text
+    // ─────────────────────────────
+    for (int i = 0; i < padding; i++) Serial.write(' '); // Left padding
+    Serial.println(message); // Main message
+
+    // ─────────────────────────────
+    // Bottom decorative line
+    // ─────────────────────────────
+    for (uint8_t i = 0; i < totalWidth; i++) Serial.write('-');
+    Serial.println();
+
+    // ─────────────────────────────
+    // Detailed information below the main message
+    // ─────────────────────────────
+    Serial.print("[");
+    Serial.print(date);
+    Serial.print(" ");
+    Serial.print(time);
+    Serial.print("] ");
+    Serial.print(file);
+    Serial.print("::");
+    Serial.print(function);
+    Serial.print(" ➤ ");
+    Serial.println(message);
+
+    Serial.println();
 }
+
+
+/**
+ * Prints a decorative header with the given message centered.
+ *
+ * @param message The text to be displayed centered.
+ * @param width   The total width of the header line.
+ * @param deco    The decorative character to use for the top/bottom lines.
+ */
+void standardHeader(const char* message,
+                    uint16_t width,
+                    char deco) {
+    int msgLen = strlen(message);
+    int totalDeco = width - msgLen - 2; // Subtract 2 for spacing around the message
+    if (totalDeco < 0) totalDeco = 0;
+
+    int leftDeco = totalDeco / 2;
+    int rightDeco = totalDeco - leftDeco;
+
+    // 🔹 Blank line before the header
+    Serial.println();
+
+    // 🔹 Left decorative padding
+    for (int i = 0; i < leftDeco; i++) Serial.write(deco);
+
+    // 🔹 Centered message with spacing
+    Serial.print(' ');
+    Serial.print(message);
+    Serial.print(' ');
+
+    // 🔹 Right decorative padding
+    for (int i = 0; i < rightDeco; i++) Serial.write(deco);
+
+    // 🔹 Blank line after the header
+    Serial.println();
+    Serial.println();
+}
+
+
+/**
+ * @brief Prints a decorated header with centered text and padding on both sides.
+ *
+ * This function builds a single line consisting of a combined text
+ * that includes the message, file, function, date, and time, surrounded
+ * by decorative characters on the left and right to achieve a total line width
+ * specified by the user.
+ *
+ * Output format example:
+ *  ----- Message | file | function | date time -----
+ *
+ * @param message   Main text or description to display.
+ * @param file      File path or source file name.
+ * @param function  Name of the function where this is called.
+ * @param date      Compilation date (recommended: __ time      CompilationDATE__).
+ * @param time (recommended: __TIME__).
+ * @param width     Total width of the line (default: 120).
+ * @param deco      Decorative character (default: '-').
+ *
+ * @note The number of decorative characters is automatically adjusted
+ *       to keep the text centered within the given width.
+ */
+void standardHeaderFull(const char* message,
+                        const char* file,
+                        const char* function,
+                        const char* date,
+                        const char* time,
+                        uint16_t width,
+                        char deco) {
+    char buffer[256];
+    // Build the full message with metadata
+    snprintf(buffer, sizeof(buffer), "%s | %s | %s | %s %s",
+             message, file, function, date, time);
+
+    int msgLen = strlen(buffer);
+    int totalDeco = width - msgLen - 2; // Subtract 2 for spacing around the message
+    if (totalDeco < 0) totalDeco = 0;   // Prevent negative padding
+
+    int leftDeco = totalDeco / 2;
+    int rightDeco = totalDeco - leftDeco;
+
+    // 🔹 Blank line before the header
+    Serial.println();
+
+    // 🔹 Left decorative padding
+    for (int i = 0; i < leftDeco; i++) Serial.write(deco);
+
+    // 🔹 Centered message with spacing
+    Serial.print(' ');
+    Serial.print(buffer);
+    Serial.print(' ');
+
+    // 🔹 Right decorative padding
+    for (int i = 0; i < rightDeco; i++) Serial.write(deco);
+
+    // 🔹 Blank lines after the header
+    Serial.println();
+    Serial.println();
+}
+
 
 /**
  * @brief Prints an enriched error message to the serial monitor, including contextual information.
@@ -77,6 +196,7 @@ void standardErrorMessage(const char* message, const char* file, const char* fun
   Serial.println();
 }
 
+
 /**
  * @brief Prints the current system configuration status to the serial monitor.
  * 
@@ -88,20 +208,32 @@ void standardErrorMessage(const char* message, const char* file, const char* fun
  * @param configuration  Reference to the current system configuration structure.
  */
 void showConfigurationMessage(const configuracionMain& configuration) {
-  Serial.println(); // Initial line break
-  Serial.println("📋 Current configuration status:");
-  Serial.println("----------------------------------------");
+  standardMessage("Current System Configuration",
+                     __FILE__,
+                     __FUNCTION__,
+                     __DATE__,
+                     __TIME__);
   Serial.print("🔧 Debug mode: ");
   Serial.println(configuration.debugMode ? "Enabled" : "Disabled");
 
-  Serial.print("💡 LED project: ");
-  Serial.println(configuration.proyect_Led ? "Enabled" : "Disabled");
-
-    Serial.print("💡 LED project: ");
+  Serial.print("💡 LED proyect_RIFD_RC522: ");
   Serial.println(configuration.proyect_RIFD_RC522 ? "Enabled" : "Disabled");
 
-  Serial.println("----------------------------------------");
-  Serial.println(); // Final line break
+  standardHeaderFull("End of Configuration",
+                     __FILE__,
+                     __FUNCTION__,
+                     __DATE__,
+                     __TIME__,
+                     120,
+                     '-');
 
   
 }
+
+
+void showMsgPrinLine(char c, int length) {
+   for (int i = 0; i < length; i++) {
+        Serial.print(c);
+    }
+    Serial.println();
+  }
