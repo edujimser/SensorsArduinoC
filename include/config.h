@@ -1,7 +1,7 @@
 #ifndef     CONF_MAIN_H
 #define     CONF_MAIN_H
 
-#include "RFID-RC522/RFID-RC522_System.h"
+
 
 
 /**

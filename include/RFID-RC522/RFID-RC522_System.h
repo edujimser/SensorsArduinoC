@@ -7,7 +7,9 @@
 #include <MFRC522Driver.h> // Include the base driver class for MFRC522
 #include <MFRC522DriverPinSimple.h> // Include the simple pin driver for MFRC522
 #include <MFRC522Constants.h> // Include constants for MFRC522
+#include <MFRC522Debug.h> // Include debugging utilities for MFRC522
 #include "pinout/pinout.h"   // Custom pin mapping
+#include "msg/msg.h"
 
 /**
  * @brief Class to handle the RFID RC522 module using a centralized pin mapping.
@@ -18,6 +20,7 @@ public:
      * @brief Default constructor.
      */
     RFID_System();
+
     /**
      * @brief Initialize SPI interface and the RC522 module.
      */
@@ -26,6 +29,12 @@ public:
     void isInitMFRC522();
 
     void testMFRC522();
+
+    void statusSensor();
+
+    void detectedTag();
+
+
     /**
      * @brief SPI hardware pins (from Pins::SPI).
      * MISO = index 0, MOSI = index 1, SCK = index 2.
@@ -39,8 +48,8 @@ public:
      * @brief RC522‐specific control pins (from Pins::GPIO).
      * Adjust indexes as per actual wiring.
      */
-    static constexpr uint8_t PIN_RST  = Pins::GPIO[2].number; ///< Example: PIN_GPIO_24
-    static constexpr uint8_t PIN_RQ   = Pins::GPIO[4].number; ///< Example: PIN_GPIO_26
+    static constexpr uint8_t PIN_RST  = Pins::GPIO[2].number; ///< Example: PIN_GPIO_23
+    static constexpr uint8_t PIN_RQ   = Pins::GPIO[4].number; ///< Example: PIN_GPIO_25
 
     /**
      * @brief MFRC522v2 library object.
@@ -52,8 +61,9 @@ public:
     MFRC522DriverPinSimple PIN_RST_OBJ{PIN_RST};
     MFRC522DriverPinSimple PIN_RQ_OBJ{PIN_RQ};
  
-    MFRC522DriverSPI driver{PIN_SS_OBJ, SPI, SPISettings(4000000u, MSBFIRST, SPI_MODE0)};
+    MFRC522DriverSPI driver{PIN_SS_OBJ, SPI, SPISettings(1000000u, MSBFIRST, SPI_MODE0)};
     MFRC522 rfid{driver};
+    MFRC522Debug rfidDebug;  // Debugging utility instance
 };
 
 #endif // RFID_RC522_H 

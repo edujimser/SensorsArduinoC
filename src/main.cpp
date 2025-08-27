@@ -24,7 +24,9 @@
 #include "pinout/pinout.h"                                 // Pin mapping for the personal project
 #include "msg/msg.h"                                       // Message handling functions
 #include "diagnostics/diagnosticsUART.h"                   // UART diagnostics functions
-#include "diagnostics/diagnosticsEEPROM.h"                 // EEPROM diagnostics functions
+#include "diagnostics/diagnosticsEEPROM.h"
+#include "RFID-RC522/RFID-RC522_System.h"             // EEPROM diagnostics functions
+#include "menu/menu.h"                                     // Menu display functions
 
 void setup() {                                             // Arduino setup function (runs once at startup)
   if (systemConfiguration.debugMode) {                     // Check if the system is in debug mode
@@ -42,9 +44,58 @@ void setup() {                                             // Arduino setup func
     DiagnosticsEEPROM::runTest();                          // Run diagnostics on all UART ports
     showConfigurationMessage(systemConfiguration);         // Display the current system configuration
     initializeMainConfiguration(systemConfiguration);      // Initialize pins and settings for main config
-  }
-}
+  };
+};
 
-void loop() {     
-                                            
-}   
+void loop() {
+    if (systemConfiguration.proyect_RIFD_RC522) {
+        static RFID_System rfidSystem;  
+        static bool mostrarMenu = true; // bandera para controlar cuándo se pinta
+
+        // Pintar menú solo cuando esté activada la bandera
+        if (mostrarMenu) {
+            showMenu_RIFD_RC522();
+            mostrarMenu = false;
+        }
+
+        // Comprobar si hay datos por Serial
+        if (Serial.available() > 0) {
+            char command = toupper(Serial.read());
+
+            switch (command) {
+                case 'A':
+                    rfidSystem.statusSensor();
+                    mostrarMenu = true; // volver a mostrar después
+                    break;
+
+                case 'B':
+                    rfidSystem.detectedTag();
+                    mostrarMenu = true;
+                    break;
+
+                case 'C':
+                    // Acción C...
+                    mostrarMenu = true;
+                    break;
+
+                case 'M': // Menú manual
+                    mostrarMenu = true;
+                    break;
+
+                case '\n':
+                case '\r':
+                    // Ignorar saltos de línea
+                    break;
+
+                default:
+                    Serial.println("⚠ Comando desconocido. Pulsa 'M' para menú.");
+                    break;
+            };
+        };
+    };
+};
+
+   
+
+
+

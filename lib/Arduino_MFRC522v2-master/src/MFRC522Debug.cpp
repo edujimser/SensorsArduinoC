@@ -113,7 +113,10 @@ void MFRC522Debug::PCD_DumpVersionToSerial(MFRC522 &device, Print &logPrint) {
       logPrint.println(F(" = counterfeit chip"));
       break;
     default:
-      logPrint.println(F(" = (unknown)"));
+     logPrint.print(F(" = (unknown) [0x"));
+     logPrint.print(version, HEX);
+     logPrint.println(F("]"));
+
   }
   // When 0x00 or 0xFF is returned, communication probably failed
   if(version == PCD_Version::Version_Unknown) {

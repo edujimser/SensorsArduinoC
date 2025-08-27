@@ -114,35 +114,35 @@ namespace Pins {
      * 🧩 GPIO: General-purpose digital pins
      */
     inline constexpr PinInfo GPIO[] = {
-        {"PIN_GPIO_13", 13},  // Digital: general input/output PWM13 'Note: this pin is digital'
-        {"PIN_GPIO_22", 22},  // Digital: general input/output 0
-        {"PIN_GPIO_23", 23},  // Digital: general input/output 1
-        {"PIN_GPIO_24", 24},  // Digital: general input/output 2
-        {"PIN_GPIO_25", 25},  // Digital: general input/output 3
-        {"PIN_GPIO_26", 26},  // Digital: general input/output 4
-        {"PIN_GPIO_27", 27},  // Digital: general input/output 5
-        {"PIN_GPIO_28", 28},  // Digital: general input/output 6
-        {"PIN_GPIO_29", 29},  // Digital: general input/output 7
-        {"PIN_GPIO_30", 30},  // Digital: general input/output 8
-        {"PIN_GPIO_31", 31},  // Digital: general input/output 9
-        {"PIN_GPIO_32", 32},  // Digital: general input/output 10 
-        {"PIN_GPIO_33", 33},  // Digital: general input/output 11
-        {"PIN_GPIO_34", 34},  // Digital: general input/output 12
-        {"PIN_GPIO_35", 35},  // Digital: general input/output 13
-        {"PIN_GPIO_36", 36},  // Digital: general input/output 14
-        {"PIN_GPIO_37", 37},  // Digital: general input/output 15
-        {"PIN_GPIO_38", 38},  // Digital: general input/output 16
-        {"PIN_GPIO_39", 39},  // Digital: general input/output 17
-        {"PIN_GPIO_40", 40},  // Digital: general input/output 18 
-        {"PIN_GPIO_41", 41},  // Digital: general input/output 19
-        {"PIN_GPIO_42", 42},  // Digital: general input/output 20
-        {"PIN_GPIO_43", 43},  // Digital: general input/output 21
-        {"PIN_GPIO_44", 44},  // Digital: general input/output 22
-        {"PIN_GPIO_45", 45},  // Digital: general input/output 23
-        {"PIN_GPIO_46", 46},  // Digital: general input/output 24
-        {"PIN_GPIO_47", 47},  // Digital: general input/output 25
-        {"PIN_GPIO_48", 48},  // Digital: general input/output 26
-        {"PIN_GPIO_49", 49}   // Digital: general input/output 27
+        {"PIN_GPIO_13", 13},  // Digital: general input/output PWM13 'Note: this pin is digital' input/output 0
+        {"PIN_GPIO_22", 22},  // Digital: general input/output 1
+        {"PIN_GPIO_23", 23},  // Digital: general input/output 2
+        {"PIN_GPIO_24", 24},  // Digital: general input/output 3
+        {"PIN_GPIO_25", 25},  // Digital: general input/output 4
+        {"PIN_GPIO_26", 26},  // Digital: general input/output 5
+        {"PIN_GPIO_27", 27},  // Digital: general input/output 6
+        {"PIN_GPIO_28", 28},  // Digital: general input/output 7
+        {"PIN_GPIO_29", 29},  // Digital: general input/output 8
+        {"PIN_GPIO_30", 30},  // Digital: general input/output 9
+        {"PIN_GPIO_31", 31},  // Digital: general input/output 10
+        {"PIN_GPIO_32", 32},  // Digital: general input/output 11 
+        {"PIN_GPIO_33", 33},  // Digital: general input/output 12
+        {"PIN_GPIO_34", 34},  // Digital: general input/output 13
+        {"PIN_GPIO_35", 35},  // Digital: general input/output 14
+        {"PIN_GPIO_36", 36},  // Digital: general input/output 15
+        {"PIN_GPIO_37", 37},  // Digital: general input/output 16
+        {"PIN_GPIO_38", 38},  // Digital: general input/output 17
+        {"PIN_GPIO_39", 39},  // Digital: general input/output 18
+        {"PIN_GPIO_40", 40},  // Digital: general input/output 19 
+        {"PIN_GPIO_41", 41},  // Digital: general input/output 20
+        {"PIN_GPIO_42", 42},  // Digital: general input/output 21
+        {"PIN_GPIO_43", 43},  // Digital: general input/output 22
+        {"PIN_GPIO_44", 44},  // Digital: general input/output 23
+        {"PIN_GPIO_45", 45},  // Digital: general input/output 24
+        {"PIN_GPIO_46", 46},  // Digital: general input/output 25
+        {"PIN_GPIO_47", 47},  // Digital: general input/output 26
+        {"PIN_GPIO_48", 48},  // Digital: general input/output 27
+        {"PIN_GPIO_49", 49}   // Digital: general input/output 2189
     };
 
     /*
